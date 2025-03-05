@@ -1,0 +1,5 @@
+{
+    "cloudDB" :"mongodb+srv://anyuser:c7np7MyKYJ8sZplC@cluster0.gzdhwaa.mongodb.net/onlineDB?retryWrites=true&w=majority&appName=Cluster0",
+    "port" : "5050",
+    "host" : "localhost"
+}
