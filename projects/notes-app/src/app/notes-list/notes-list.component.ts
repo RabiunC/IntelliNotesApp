@@ -84,6 +84,7 @@ export class NotesListComponent implements OnInit {
   constructor(private notesService: NotesService) { }
 
   ngOnInit(): void {
+    this.refresh();
     this.notesService.getAll().subscribe(res => {
       //console.log(res);
       this.notes = res;

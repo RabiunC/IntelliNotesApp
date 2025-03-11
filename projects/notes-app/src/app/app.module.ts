@@ -2,8 +2,8 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
 import { AppRoutingModule } from './app-routing.module';
+
 import { AppComponent } from './app.component';
 import { NotesListComponent } from './notes-list/notes-list.component';
 import { NoteCardComponent } from './note-card/note-card.component';
@@ -13,6 +13,7 @@ import { LoginComponent } from './login.component';
 import { RegisterComponent } from './register.component';
 import { UserService } from './shared/user.service';
 import { HttpClientModule } from '@angular/common/http';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { HttpClientModule } from '@angular/common/http';
     NoteCardComponent,
     NoteDetailsComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    NotFoundComponent
   ],
   imports: [
     BrowserModule,

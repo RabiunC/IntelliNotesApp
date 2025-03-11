@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
 import { Note } from '../shared/note.model';
 import { NotesService } from '../shared/notes.service';
 import { ActivatedRoute, Params, Router } from '@angular/router';
@@ -34,12 +33,17 @@ export class NoteDetailsComponent implements OnInit {
       this.notesService.getbyId(id).subscribe((res) => {
         //console.log(res);
         this.newInfo = res;
-        console.log(this.newInfo);
+        //console.log(this.newInfo);
       })
   }
 
   clickHandler(form: any, event: any) {
     //console.log(this.newInfo._id)
+    if(!this.newInfo._id){
+      this.notesService.addNote(this.newInfo.title, this.newInfo.body).subscribe((res) => {
+        console.log(res);
+      })
+    }
       this.notesService.updateNote(this.newInfo._id, this.newInfo).subscribe((res) => {
         console.log(res);
       })

@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { NotesListComponent } from './notes-list/notes-list.component';
 import { NoteDetailsComponent } from './note-details/note-details.component';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 const routes: Routes = 
       [ 
@@ -12,6 +13,7 @@ const routes: Routes =
         { path: 'register', component: RegisterComponent},
         { path: 'dashboard/new', component: NoteDetailsComponent },
         { path: 'dashboard/new/:id', component: NoteDetailsComponent },
+        { path: '**', component: NotFoundComponent}
       ];
 
 @NgModule({
