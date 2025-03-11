@@ -10,8 +10,8 @@ const routes: Routes =
         { path: 'dashboard', component: NotesListComponent},
         { path: 'login', component: LoginComponent},
         { path: 'register', component: RegisterComponent},
-        { path: 'new', component: NoteDetailsComponent },
-        { path: ':id', component: NoteDetailsComponent },
+        { path: 'dashboard/new', component: NoteDetailsComponent },
+        { path: 'dashboard/new/:id', component: NoteDetailsComponent },
       ];
 
 @NgModule({

@@ -1,13 +1,15 @@
 <div class="form-container">
-  <form #noteForm="ngForm" (ngSubmit)="onSubmit(noteForm)">
+  <form #myForm="ngForm" method="get" action="#" (submit)="clickHandler(myForm, $event)">
     <div class="field">
       <label for="" class="label">Title</label>
       <div class="control">
         <input
           type="text"
           class="input"
+          id="title"
           name="title"
-          [(ngModel)]="note.title"
+          #notetitle="ngModel"
+          [(ngModel)]="newInfo.title"
           required
         />
       </div>
@@ -18,9 +20,10 @@
       <div class="control">
         <textarea
           name="body"
-          id=""
+          id="body"
           class="textarea"
-          [(ngModel)]="note.body"
+          #notebody="ngModel"
+          [(ngModel)]="newInfo.body"
         ></textarea>
       </div>
     </div>
@@ -34,9 +37,7 @@
       <div class="control">
         <button
           class="button is-success"
-          type="success"
-          [disabled]="!noteForm.valid"
-        >
+          type="success">
           Save
         </button>
       </div>

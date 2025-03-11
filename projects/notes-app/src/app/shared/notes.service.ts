@@ -13,11 +13,13 @@ export class NotesService {
   constructor(private http: HttpClient) { }
 
   getAll(){
-    return this.notes;
+    return this.http.get(this.url+"data");
+    //return this.notes;
   }
 
-  get(id: number){
-    return this.notes[id];
+  getbyId(id: number){
+    //return this.notes[id];
+    return this.http.get(this.url+"edit/"+id);
   }
 
   getId(note: Note){
@@ -32,13 +34,15 @@ export class NotesService {
     return this.http.post(this.url+"add", data);
   }
 
-  update(id: number, title: string, body: string){
-    let note = this.notes[id];
+  updateNote(id:any, data: any){
+    /*let note = this.notes[id];
     note.title = title;
-    note.body = body;
+    note.body = body;*/
+    return this.http.put(this.url+"edit/"+id, data);
   }
 
-  delete(id:number){
-    this.notes.splice(id, 1);
+  delete(id:any){
+    //this.notes.splice(id, 1);
+    return this.http.delete(this.url+"delete/"+id);
   }
 }

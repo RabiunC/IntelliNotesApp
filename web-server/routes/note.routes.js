@@ -7,7 +7,7 @@ let notesRouter = express.Router();
 //----------------------------------------
 notesRouter.get("/data",function(req, res){
     console.log("get request for data recieved");
-    Notes.find().then( notes => res.status(200).json(notes) ).catch(error => errorHandler(error) );
+    Note.find().then( notes => res.status(200).json(notes) ).catch(error => errorHandler(error) );
 });
 
 notesRouter.post("/add", function(req, res){
@@ -25,7 +25,7 @@ notesRouter.post("/add", function(req, res){
 notesRouter.delete("/delete/:id",function(req, res){
     console.log("delete request recieved for note with id: "+req.params.id);
     
-    Notes.findByIdAndDelete({_id : req.params.id})
+    Note.findByIdAndDelete({_id : req.params.id})
     .then(deletednote => {
         res.status(200).json({"message": deletednote.title+" was deleted"})
     })
@@ -35,7 +35,7 @@ notesRouter.delete("/delete/:id",function(req, res){
 notesRouter.get("/edit/:id",function(req, res){
     console.log("Edit request recieved for note with id "+req.params.id);
 
-    Notes.findById(req.params.id)
+    Note.findById(req.params.id)
     .then(note2update => res.status(200).json(note2update))
     .catch(error => errorHandler(error));
 });
@@ -43,14 +43,15 @@ notesRouter.get("/edit/:id",function(req, res){
 notesRouter.put("/edit/:id",function(req, res){
     console.log("Put request recieved for note with id "+req.params.id);
 
-    Notes.findById(req.params.id)
-    .then( updateNote => {
+    Note.findById(req.params.id)
+    .then( updatedNote => {
         updatedNote.title = req.body.title;
-        updatedNote.subject = req.body.subject;
-        updatedNote.description = req.body.description;
-        updateNote.save()
+        updatedNote.body = req.body.body;
+        //updatedNote.description = req.body.description;
+        updatedNote.save()
         .then((noteupdated)=>{
-            res.json({"updatedmessage":noteupdated})
+            res.status(200).json({noteupdated});
+            console.log(updatedNote._id +"Note Updated Successfully:");
         })
         .catch(error => errorHandler(error));
     })

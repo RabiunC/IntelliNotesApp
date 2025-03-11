@@ -8,6 +8,7 @@ import { NotesService } from '../shared/notes.service';
   templateUrl: './notes-list.component.html',
   styleUrls: ['./notes-list.component.scss'],
   animations: [
+
     trigger('itemAnim', [
       transition('void => *', [
         style({
@@ -75,113 +76,40 @@ import { NotesService } from '../shared/notes.service';
 export class NotesListComponent implements OnInit {
 
   //cardTitle: string = 'abc';
-  notes: Note[] = new Array<Note>();
-  filteredNotes: Note[] = new Array<Note>();
+  notes: any;
+  filteredNotes: any;
   @ViewChild('filterInput')
   filterInputElRef!: ElementRef<HTMLInputElement>;
 
   constructor(private notesService: NotesService) { }
 
   ngOnInit(): void {
-    this.notes = this.notesService.getAll();
+    this.notesService.getAll().subscribe(res => {
+      //console.log(res);
+      this.notes = res;
+    });
     //this.filteredNotes = this.notesService.getAll();
-    this.filter('');
+    //this.filter('');
   }
 
-  deleteNote(note: Note) {
-    let noteId = this.notesService.getId(note);
-    this.notesService.delete(noteId);
-    this.filter(this.filterInputElRef.nativeElement.value);
+  deleteNote(id: any) {
+    //let noteId = this.notesService.getId(note);
+    //this.notesService.delete(noteId);
+    this.notesService.delete(id).subscribe(res => {
+      console.log(res);
+      this.refresh();
+    })
   }
 
   generateNoteUrl(note: Note){
-    let noteId = this.notesService.getId(note);
-    return noteId;
-  }
-
-  filter(query:string) {
-    query = query.toLowerCase().trim();
-    let allResults: Note[] = new Array<Note>();
+    //let noteId = this.notesService.getId(note);
+    //return noteId;
     
-    //split the query into individual words
-    let terms: string[] = query.split(' ');
+  }
 
-    //remove duplicates
-    terms = this.removeDuplicates(terms);
-    terms.forEach( (term) => {
-      let results: Note[] = this.relevantNotes(term);
-      allResults = [...allResults, ...results];
+  refresh(){
+    this.notesService.getAll().subscribe(res => {
+      this.notes = res;
     });
-    let uniqueResults = this.removeDuplicates(allResults);
-    this.filteredNotes = uniqueResults;
-
-    //this.sortByRelevancy(allResults);
   }
-
-  removeDuplicates(arr: Array<any>) {
-    let uniqueResults: Set<any> = new Set<any>();
-    //loop through the input array and add items to the set
-
-    arr.forEach(e => uniqueResults.add(e));
-    return Array.from(uniqueResults);
-  }
-
-  relevantNotes(query: string): Array<Note> {
-    query = query.toLowerCase().trim();
-    let relevantNotes = this.notes.filter(note => {
-        if(note.title && note.title.toLowerCase().includes(query)){
-          return true;
-        }
-        if(note.body && note.body.toLowerCase().includes(query)){
-          return true;
-        }
-        return false;
-        })    
-      return relevantNotes;
-    }
-
-  /*sortByRelevancy(searchResults: Note[]){
-    let noteCountObj: Object = {};
-    searchResults.forEach( note => {
-      let noteId = this.notesService.getId(note);
-
-      if(noteCountObj[noteId]){
-        noteCountObj[noteId] += 1;
-      }
-      else{
-        noteCountObj[noteId] = 1;
-      }
-    })
-
-    this.filteredNotes = this.filteredNotes.sort((a: Note, b: Note) => {
-
-      let aId = this.notesService.getId(a);
-      let bId = this.notesService.getId(b);
-
-      let aCount = noteCountObj[aId];
-      let bCount = noteCountObj[bId];
-
-      return bCount - aCount;
-    })
-  }
-
-  /*....................Debouncing Angular Search field..................................................................
-  import {fromEvent } from 'rxjs';
-  import { debounceTime, distinctUntilChanged, tap } from 'rxjs/operators'
-
-   ngAfterViewInit() {
-            // server-side search
-        fromEvent(this.filterInputElRef.nativeElement,'keyup')
-            .pipe(
-                filter(Boolean),  //To make sure that the the search function does not get called at when the field is empty
-                debounceTime(150), 
-                distinctUntilChanged(),
-                tap((text) => {
-                  console.log(this.filterInputElRef.nativeElement.value)
-                })
-            )
-            .subscribe();
-  }
-  */
-
 }

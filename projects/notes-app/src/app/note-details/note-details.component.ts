@@ -7,49 +7,46 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 @Component({
   selector: 'app-note-details',
   templateUrl: './note-details.component.html',
-  styleUrls: ['./note-details.component.scss']
+  styleUrls: ['./note-details.component.scss'],
 })
 export class NoteDetailsComponent implements OnInit {
-
-  constructor(private notesService: NotesService, private router: Router, private route: ActivatedRoute) { }
-
+  constructor(
+    private notesService: NotesService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {}
+  
   note: any;
   noteId: any;
+  myForm: any;
   new: boolean = true;
 
-  ngOnInit(): void {    
+  newInfo: any = {
+    _id: '',
+    title: '',
+    body: ''
+  };
 
-    this.route.params.subscribe( (params: Params) => {
+  ngOnInit() {
+    var id = this.route.snapshot.params['id'];
+    //console.log(id);
 
-      this.note = new Note();
-
-      if(params['id']){
-        this.note = this.notesService.get(params['id']);
-        this.noteId = params['id'];
-        this.new = false;
-      }
-      else{
-        this.new = true;
-      }
-    })    
+      this.notesService.getbyId(id).subscribe((res) => {
+        //console.log(res);
+        this.newInfo = res;
+        console.log(this.newInfo);
+      })
   }
 
-  onSubmit(form: NgForm) {
-    //console.log(form.value);
-    if(this.new){
-      this.notesService.addNote(form.value).subscribe(res => {
+  clickHandler(form: any, event: any) {
+    //console.log(this.newInfo._id)
+      this.notesService.updateNote(this.newInfo._id, this.newInfo).subscribe((res) => {
         console.log(res);
-      });
-      this.router.navigateByUrl('/');
-    }
-    else{
-      this.notesService.update(this.noteId, form.value.title, form.value.body);
-      this.router.navigateByUrl('/');
-    }
+      })
+      this.router.navigateByUrl('/dashboard');
   }
 
   cancel() {
-    this.router.navigateByUrl('/');
+    this.router.navigateByUrl('/dashboard');
   }
-
 }
