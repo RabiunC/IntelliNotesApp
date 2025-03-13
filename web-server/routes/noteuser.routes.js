@@ -2,6 +2,10 @@ const express = require("express");
 const NoteUser = require("../model/noteuser.model");
 const errorHandler = require("../helpers/errorhandler.helper");
 
+
+const bcrypt =  require('bcryptjs');
+const jwt = require('jsonwebtoken');
+
 let usersRouter = express.Router();
 // CRUD Routes
 //----------------------------------------
@@ -30,7 +34,14 @@ usersRouter.post("/login",function(req, res){
 
 usersRouter.post("/register", function(req, res){
     console.log("add user post request recieved", req.body);
-    let noteUser = new NoteUser(req.body);
+    
+    const hashedPW = bcrypt.hashSync(req.body.password, 12);
+    const hashedUser = {
+        name: req.body.name,
+        email: req.body.email,
+        password: hashedPW
+    }
+    let noteUser = new NoteUser(hashedUser);
     noteUser.save().then( dbres => {
         res.json({ 'message': dbres.name+' was registered'})
     })

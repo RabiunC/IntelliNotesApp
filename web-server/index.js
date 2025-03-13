@@ -1,15 +1,24 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const cors = require("cors");
 
 const errorHandler = require("./helpers/errorhandler.helper")
 const config = require("./config.json");
+
+const cors = require("cors");
+const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
 
 const notesRouter = require("./routes/note.routes");
 const usersRouter = require("./routes/noteuser.routes");
 
 const app = express();
-app.use(express.json()).use(cors());
+app.use(express.json()).use(cors()).use(bodyParser.json()).use(cookieParser());
+
+app.use(cors({
+    origin: 'http://localhost:4200',
+    methods: 'GET, POST, PUT, DELETE',
+    allowedHeaders: 'Content-Type, Accepts, Authorization'
+}))
 
 app.use('/notes', notesRouter);
 app.use('/users', usersRouter);
