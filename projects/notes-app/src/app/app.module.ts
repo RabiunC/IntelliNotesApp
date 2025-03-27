@@ -12,7 +12,7 @@ import { NotesService } from './notes.service';
 import { LoginComponent } from './login.component';
 import { RegisterComponent } from './register.component';
 import { UserService } from './shared/user.service';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NotFoundComponent } from './not-found/not-found.component';
 
 @NgModule({
