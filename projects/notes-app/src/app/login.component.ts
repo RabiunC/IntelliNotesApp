@@ -3,8 +3,8 @@ import { UserService } from './shared/user.service';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-login',
-  template: `
+    selector: 'app-login',
+    template: `
     <section class="vh-100">
       <div class="container-fluid">
         <div class="row">
@@ -64,7 +64,8 @@ import { Router } from '@angular/router';
       </div>
     </section>
   `,
-  styles: ``,
+    styles: ``,
+    standalone: false
 })
 export class LoginComponent {
 

@@ -4,9 +4,10 @@ import { NotesService } from '../shared/notes.service';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 
 @Component({
-  selector: 'app-note-details',
-  templateUrl: './note-details.component.html',
-  styleUrls: ['./note-details.component.scss'],
+    selector: 'app-note-details',
+    templateUrl: './note-details.component.html',
+    styleUrls: ['./note-details.component.scss'],
+    standalone: false
 })
 export class NoteDetailsComponent implements OnInit {
   constructor(

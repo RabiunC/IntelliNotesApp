@@ -1,9 +1,10 @@
 import { Component, ElementRef, Input, AfterViewInit, Renderer2, ViewChild, Output, EventEmitter } from '@angular/core';
 
 @Component({
-  selector: 'app-note-card',
-  templateUrl: './note-card.component.html',
-  styleUrls: ['./note-card.component.scss']
+    selector: 'app-note-card',
+    templateUrl: './note-card.component.html',
+    styleUrls: ['./note-card.component.scss'],
+    standalone: false
 })
 export class NoteCardComponent implements AfterViewInit {
 

@@ -4,8 +4,8 @@ import { NgForm } from '@angular/forms';
 import { UserService } from './shared/user.service';
 
 @Component({
-  selector: 'app-register',
-  template: `
+    selector: 'app-register',
+    template: `
 
                     <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">
                       Sign up
@@ -65,7 +65,8 @@ import { UserService } from './shared/user.service';
                       </div>
                     </form>
   `,
-  styles: ``,
+    styles: ``,
+    standalone: false
 })
 export class RegisterComponent {
   registerInfo: any = {
