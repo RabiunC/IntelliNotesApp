@@ -15,10 +15,29 @@ usersRouter.get("/data", function (req, res) {
     .catch((error) => errorHandler(error));
 });
 
-usersRouter.post("/login", function (req, res) {
-  console.log("post request for login validation");
-  NoteUser.findOne({ email: req.body.email })
-    .then((founduser) => {
+usersRouter.post("/login", async function (req, res) {
+  try {
+    console.log("post request for login validation");
+    const user = await NoteUser.findOne({ email: req.body.email });
+
+    if (user) {
+      const isEqual = bcrypt.compare(req.body.password, user.password);
+      if (!isEqual) {
+        //return Promise.reject("Incorrect password");
+        res.status(401).json({ message: "Incorrect password" });
+      } else {
+        const token = jwt.sign(
+          {
+            email: user.email,
+            userId: user._id,
+          },
+          "somebiiiigtokenoostringggg",
+          { expiresIn: "1h" }
+        );
+        res.status(200).json({ message: "Login successful", token: token });
+      }
+    } 
+    /*.then((founduser) => {
       console.log(founduser);
       if (!founduser) {
         res.status(404).json({ message: req.body.email + " not found" });
@@ -27,8 +46,11 @@ usersRouter.post("/login", function (req, res) {
       } else {
         res.status(401).json({ message: "Incorrect password" });
       }
-    })
-    .catch((error) => errorHandler(error));
+    })*/
+  } catch (error) {
+    res.status(500).json({ message: "User does not exist" });
+    console.log(error);
+  }
 });
 
 usersRouter.post("/register", async function (req, res) {
@@ -45,7 +67,6 @@ usersRouter.post("/register", async function (req, res) {
     const noteUser = new NoteUser(hashedUser);
 
     await noteUser.save();
-
     const token = jwt.sign(
       {
         email: noteUser.email,
@@ -54,7 +75,6 @@ usersRouter.post("/register", async function (req, res) {
       "somebiiiigtokenoostringggg",
       { expiresIn: "1h" }
     );
-
     res.status(200)
       .json({ message: "Registered Successfully", token: token });
 

@@ -6,15 +6,14 @@ import {
     HttpInterceptor, HttpErrorResponse
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import {tap} from "rxjs/operators";
-import {Router} from "@angular/router";
 
-Injectable()
+@Injectable()
 export class JwtInterceptor implements HttpInterceptor 
 {
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> 
   {
-    let token = localStorage.getItem('access_token');
+    let token = localStorage.getItem('token');
+    //alert(token);
     if (token) {
       request = request.clone({
         setHeaders: {

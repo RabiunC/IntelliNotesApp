@@ -29,7 +29,7 @@ import { Router } from '@angular/router';
                           id="useremail"
                         />
                         <div *ngIf="useremail.touched && useremail.invalid" class="error form-text">
-                          Name
+                          Email
                         </div>
                       </div>  
                       <div class="mb-3">
@@ -78,15 +78,12 @@ export class LoginComponent {
 
   clickHandler(myForm: any, evt: Event) {
     
-    console.log(myForm.value);
+    //console.log(myForm.value);
     this.uService.getUser(this.loginInfo).subscribe(
-      (response) => {
-        //console.log(res);
+      (res) => {
+        console.log(res);
+        
         this.router.navigateByUrl('dashboard');
-      },
-      (err) => {
-        console.error(err);
-        this.router.navigateByUrl('register');
       }
     );     
   }

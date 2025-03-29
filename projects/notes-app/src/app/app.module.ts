@@ -14,6 +14,7 @@ import { RegisterComponent } from './register.component';
 import { UserService } from './shared/user.service';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NotFoundComponent } from './not-found/not-found.component';
+import { JwtInterceptor } from './jwt-interceptor';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,13 @@ import { NotFoundComponent } from './not-found/not-found.component';
     BrowserAnimationsModule,
     HttpClientModule
   ],
-  providers: [NotesService, UserService],
+  providers: [NotesService, UserService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: JwtInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
