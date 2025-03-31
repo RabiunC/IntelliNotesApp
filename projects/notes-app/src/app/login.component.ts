@@ -76,13 +76,12 @@ export class LoginComponent {
       password: ''
   }
 
-  clickHandler(myForm: any, evt: Event) {
-    
+  clickHandler(myForm: any, evt: Event) {    
     //console.log(myForm.value);
     this.uService.getUser(this.loginInfo).subscribe(
-      (res) => {
-        console.log(res);
-        
+      (res: any) => {
+        //console.log(res);
+        localStorage.setItem('loginToken',res.token)
         this.router.navigateByUrl('dashboard');
       }
     );     

@@ -18,37 +18,23 @@ usersRouter.get("/data", function (req, res) {
 usersRouter.post("/login", async function (req, res) {
   try {
     console.log("post request for login validation");
-    const user = await NoteUser.findOne({ email: req.body.email });
+    const founduser = await NoteUser.findOne({ email: req.body.email });
 
-    if (user) {
-      const isEqual = bcrypt.compare(req.body.password, user.password);
-      if (!isEqual) {
-        //return Promise.reject("Incorrect password");
-        res.status(401).json({ message: "Incorrect password" });
-      } else {
-        const token = jwt.sign(
-          {
-            email: user.email,
-            userId: user._id,
-          },
-          "somebiiiigtokenoostringggg",
-          { expiresIn: "1h" }
-        );
-        res.status(200).json({ message: "Login successful", token: token });
-      }
-    } 
-    /*.then((founduser) => {
-      console.log(founduser);
-      if (!founduser) {
-        res.status(404).json({ message: req.body.email + " not found" });
-      } else if (req.body.password === founduser.password) {
-        res.json({ message: "Login successful" });
-      } else {
-        res.status(401).json({ message: "Incorrect password" });
-      }
-    })*/
+    if (bcrypt.compareSync(req.body.password, founduser.password)) {
+      const token = jwt.sign(
+        {
+          email: founduser.email,
+          userId: founduser._id,
+        },
+        "somebiiiigtokenoostringggg",
+        { expiresIn: "1h" }
+      );
+      res.status(200).json({ message: "Login successful", token: token });
+      
+    } else {
+      res.status(401).json({ message: "Incorrect password" });
+    }
   } catch (error) {
-    res.status(500).json({ message: "User does not exist" });
     console.log(error);
   }
 });
@@ -56,7 +42,6 @@ usersRouter.post("/login", async function (req, res) {
 usersRouter.post("/register", async function (req, res) {
   try {
     console.log("add user post request recieved", req.body);
-
     //BCRYPT PASSWORD
     const hashedPW = bcrypt.hashSync(req.body.password, 12);
     const hashedUser = {
