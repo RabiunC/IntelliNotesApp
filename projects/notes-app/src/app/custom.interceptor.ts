@@ -6,9 +6,9 @@ export const customInterceptor: HttpInterceptorFn = (req, next) => {
   //console.log(lToken);
   const cloneReq = req.clone({
     setHeaders: {
-      Authorization: `Bearer ${localStorage.getItem('loginToken')}`
+      Authorization: `Bearer ${sessionStorage.getItem('loginToken')}`
     }
   })
 
   return next(cloneReq);
-}
+}  

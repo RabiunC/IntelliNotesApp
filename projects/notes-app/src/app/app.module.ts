@@ -12,9 +12,12 @@ import { NotesService } from './notes.service';
 import { LoginComponent } from './login.component';
 import { RegisterComponent } from './register.component';
 import { UserService } from './shared/user.service';
-import { HttpClientModule, provideHttpClient, withInterceptors} from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
 import { NotFoundComponent } from './not-found/not-found.component';
-import { customInterceptor } from './custom.interceptor';
+//import { customInterceptor } from './custom.interceptor';
+
+
+import { jwtInterceptor } from './jwt.interceptor';
 
 @NgModule({
   declarations: [
@@ -33,7 +36,12 @@ import { customInterceptor } from './custom.interceptor';
     BrowserAnimationsModule,
     HttpClientModule
   ],
-  providers: [NotesService, UserService, provideHttpClient(withInterceptors([customInterceptor]))    
+  providers: [NotesService, UserService,
+  {
+    provide: HTTP_INTERCEPTORS,
+    useClass: jwtInterceptor,
+    multi: true
+  }   
   ],
   bootstrap: [AppComponent]
 })
