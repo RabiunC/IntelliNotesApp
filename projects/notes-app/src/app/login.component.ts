@@ -77,11 +77,11 @@ export class LoginComponent {
   }
 
   clickHandler(myForm: any, evt: Event) {    
-    //console.log(myForm.value);
+    //console.log(myForm.value); 
     this.uService.getUser(this.loginInfo).subscribe(
       (res: any) => {
-        //console.log(res);
-        sessionStorage.setItem('loginToken',res.token)
+        console.log(res);
+        localStorage.setItem('loginToken', res.token);
         this.router.navigateByUrl('dashboard');
       },
       (error: any) => {
