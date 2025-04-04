@@ -81,7 +81,7 @@ export class LoginComponent {
     this.uService.getUser(this.loginInfo).subscribe(
       (res: any) => {
         console.log(res);
-        localStorage.setItem('loginToken', res.token);
+        localStorage.setItem('loginToken', JSON.stringify(res.data));
         this.router.navigateByUrl('dashboard');
       },
       (error: any) => {
