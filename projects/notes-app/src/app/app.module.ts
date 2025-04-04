@@ -18,6 +18,7 @@ import { NotFoundComponent } from './not-found/not-found.component';
 import { customInterceptor } from './custom.interceptor';
 import { jwtInterceptor } from './jwt.interceptor';
 import { tokenInterceptor } from './token.interceptor';
+import { NotesFilterPipe } from './notes.filter.pipe';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { tokenInterceptor } from './token.interceptor';
     NoteDetailsComponent,
     LoginComponent,
     RegisterComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    NotesFilterPipe
   ],
   imports: [
     BrowserModule,

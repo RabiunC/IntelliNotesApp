@@ -2,7 +2,7 @@ import { trigger, transition, style, animate, query, stagger } from '@angular/an
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Note } from '../shared/note.model';
 import { NotesService } from '../shared/notes.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
     selector: 'app-notes-list',
@@ -74,21 +74,19 @@ import { Router } from '@angular/router';
 
 export class NotesListComponent implements OnInit {
 
-  //cardTitle: string = 'abc';
   notes: any;
-  filteredNotes: any;
-  @ViewChild('filterInput')
-  filterInputElRef!: ElementRef<HTMLInputElement>;
-
-  constructor(private notesService: NotesService, private router: Router) { }
+  filterby:any = '';
+    
+  constructor(private notesService: NotesService, private router: Router,  private ar:ActivatedRoute ) { }
 
   ngOnInit(): void {
     this.notesService.getAll().subscribe(res => {
       //console.log(res);
-      this.notes = res;
+      this.notes = res;      
     });
     //this.filteredNotes = this.notesService.getAll();
     //this.filter('');
+    this.filterby = this.ar.snapshot.queryParams['filterOn'];
   }
 
   deleteNote(id: any) {
