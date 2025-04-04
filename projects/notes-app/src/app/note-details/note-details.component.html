@@ -16,6 +16,21 @@
     </div>
     <br />
     <div class="field">
+      <label for="" class="label">Subject</label>
+      <div class="control">
+        <input
+          type="text"
+          class="input"
+          id="subject"
+          name="subject"
+          #notetitle="ngModel"
+          [(ngModel)]="newInfo.subject"
+          required
+        />
+      </div>
+    </div>
+    <br />
+    <div class="field">
       <label for="" class="label">Body</label>
       <div class="control">
         <textarea

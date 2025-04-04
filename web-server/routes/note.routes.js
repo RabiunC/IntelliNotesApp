@@ -46,6 +46,7 @@ notesRouter.put("/edit/:id",function(req, res){
     Note.findById(req.params.id)
     .then( updatedNote => {
         updatedNote.title = req.body.title;
+        updatedNote.subject = req.body.subject;
         updatedNote.body = req.body.body;
         //updatedNote.description = req.body.description;
         updatedNote.save()

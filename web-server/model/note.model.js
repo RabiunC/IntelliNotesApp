@@ -7,6 +7,7 @@ let Note = mongoose.model("Note", new Schema(
     {
         id: ObjectId,
         title : String,
+        subject: String,
         body: String
     }
 ));

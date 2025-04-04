@@ -1,13 +1,13 @@
 <div class="main-container">
 
     <div class="notes-list" [@listAnim]>
-      <!--<app-note-card [title]="'cardTitle'" [body]="'bodyText bodyText bodyText'"></app-note-card>-->
       <app-note-card 
         *ngFor="let note of notes"
         [routerLink]="['new', note._id]"
         [@itemAnim]
         (delete)="deleteNote(note._id)"
         [title]="note.title" 
+        [subject]="note.subject"
         [body]="note.body">
       </app-note-card>
     </div>

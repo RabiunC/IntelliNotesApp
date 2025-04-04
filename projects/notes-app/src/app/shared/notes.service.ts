@@ -26,9 +26,9 @@ export class NotesService {
     return this.notes.indexOf(note);
   }
 
-  addNote(title: any, body: any){
+  addNote(title: any, subject:any, body: any){
     //console.log(data);
-    let data = {title, body}
+    let data = {title, subject, body}
     /*this.notes.push(note);
     let index = this.notes.length - 1;
     return index;*/

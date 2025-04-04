@@ -24,6 +24,7 @@ export class NoteDetailsComponent implements OnInit {
   newInfo: any = {
     _id: '',
     title: '',
+    subject: '',
     body: ''
   };
 
@@ -41,7 +42,7 @@ export class NoteDetailsComponent implements OnInit {
   clickHandler(form: any, event: any) {
     //console.log(this.newInfo._id)
     if(!this.newInfo._id){
-      this.notesService.addNote(this.newInfo.title, this.newInfo.body).subscribe((res) => {
+      this.notesService.addNote(this.newInfo.title, this.newInfo.subject, this.newInfo.body).subscribe((res) => {
         console.log(res);
       })
     }

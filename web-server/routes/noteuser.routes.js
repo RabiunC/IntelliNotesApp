@@ -29,7 +29,7 @@ usersRouter.post("/login", async function (req, res) {
           userId: founduser._id,
         },
         JWT_SECRET,
-        { expiresIn : 60 }
+        { expiresIn : 300 }
       );
       res.status(200).json({ message: "Login successful, Enjoy ur Token", data: token });
       //return res.json({status: 'ok', data: token});

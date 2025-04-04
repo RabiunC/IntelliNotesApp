@@ -18,6 +18,7 @@ export class NoteCardComponent implements AfterViewInit {
 
   @Input() link: any;
   @Input() title: any;
+  @Input() subject: any;
   @Input() body: any;
 
   @Output('delete') deleteEvent: EventEmitter<void> = new EventEmitter<void>();
