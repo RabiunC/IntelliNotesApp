@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { NotesService } from './notes.service';
+import { NotesService } from './shared/notes.service';
 
 @Pipe({
   name: 'notesFilter',

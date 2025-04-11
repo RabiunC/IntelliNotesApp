@@ -1,5 +1,10 @@
 <div class="form-container">
-  <form #myForm="ngForm" method="get" action="#" (submit)="clickHandler(myForm, $event)">
+  <form
+    #myForm="ngForm"
+    method="get"
+    action="#"
+    (submit)="clickHandler(myForm, $event)"
+  >
     <div class="field">
       <label for="" class="label">Title</label>
       <div class="control">
@@ -50,12 +55,19 @@
         </button>
       </div>
       <div class="control">
-        <button
-          class="button is-success"
-          type="success">
-          Save
-        </button>
+        <button class="button is-success" type="success">Save</button>
       </div>
     </div>
   </form>
 </div>
+
+<br />
+<br />
+<h2>Single File Upload</h2>
+<input
+      type="file"
+      class="file-input"
+      (change)="onChange($event)"      
+      #fileUpload
+    />
+<button (click)="onUpload()" class="upload-button">UPLOAD</button>

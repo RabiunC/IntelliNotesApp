@@ -1,6 +1,9 @@
 const express = require("express");
+const fileUpload = require("express-fileupload");
 const Note = require("../model/note.model");
 const errorHandler = require("../helpers/errorhandler.helper");
+const filesPayloadExists = require("../middleware/filePayloadExists");
+const path = require('path');
 
 let notesRouter = express.Router();
 // CRUD Routes
@@ -21,6 +24,25 @@ notesRouter.post("/add", function(req, res){
         errorHandler(error)
     })
 })
+
+notesRouter.post(
+  "/upload",
+  fileUpload({ createParentPath: true }),
+  filesPayloadExists,
+  (req, res) => {
+    const files = req.files;
+    console.log(files);
+
+    Object.keys(files).forEach((key) => {
+      const filepath = path.join(__dirname, "files", files[key].name);
+      files[key].mv(filepath, (err) => {
+        if (err) return res.status(500).json({ status: "error", message: err });
+      });
+    });
+    return res.json({ status: "succes", message: Object.keys(files).toString() });
+ 
+ }
+);
 
 notesRouter.delete("/delete/:id",function(req, res){
     console.log("delete request recieved for note with id: "+req.params.id);
