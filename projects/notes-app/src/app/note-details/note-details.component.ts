@@ -25,8 +25,8 @@ export class NoteDetailsComponent implements OnInit {
   new: boolean = true;
 
   status: "initial" | "uploading" | "success" | "fail" = "initial"; // Variable to store file status
-  file: File | null = null; // Variable to store file
-  //files: File[] = [];
+  //file: File | null = null; // Variable to store file
+  files: File[] = [];
 
   newInfo: any = {
     _id: '',
@@ -47,21 +47,23 @@ export class NoteDetailsComponent implements OnInit {
   }
 
   onChange(event: any) {
-    const file: File = event.target.files[0];
-    if (file) {
+    const files = event.target.files;
+
+    if (files.length) {
       this.status = "initial";
-      this.file = file;
+      this.files = files;
     }
   }
 
   onUpload() {
-    if (this.file) {
+    if (this.files.length) {
       const formData = new FormData();
   
-      formData.append('file', this.file, this.file.name);
-      //[...this.files].forEach((file) => {
-        //formData.append("file", file, file.name);
-      //});
+      //----Single file---
+      //formData.append('file', this.file, this.file.name);
+      [...this.files].forEach((file) => {
+        formData.append(file.name, file);
+      });
   
       const upload$ = this.http.post("http://localhost:5050/notes/upload", formData) 
       this.status = 'uploading';
